@@ -3,14 +3,14 @@ peer-to-peer-lending-on-blockchain
 ### (usecase - decentralized crowd funding platform)
 
 ## Bockchain Specifications
-#### - Data Structure for Block Data - Merkle Patricia Trie
+#### step1 (data_structure) - Data Structure for Block Data - Merkle Patricia Trie
 #### - Communication between miners - Gossip Protocol
 #### - Consensus used in Blockchain - POW + Nakamoto
 
 
 # Application has following features
 #### Every User is both, a Borrower and a Lender.
-1. Borrower can 'ask' for a sum of tokens. Each 'ask' has 
+1. Borrower can 'ask' for a sum of tokens. Each 'ask' has
 2. This 'ask' request is share among network users.
 3. Lender can choose a 'ask' request and 'promise' and make a promise for a sum of money.
 4. All previous promises for the specific 'ask' request are tracked, and if the sum of promises mount to 'asked' tokens, then money is transferred for appropriate users.
