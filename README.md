@@ -1,11 +1,16 @@
 # beeFunded
-peer-to-peer-lending-on-blockchain
+peer-to-peer-funding-on-blockchain
 ### (usecase - decentralized crowd funding platform)
 
 ## Bockchain Specifications
-#### step1 (data_structure) - Data Structure for Block Data - Merkle Patricia Trie
-#### - Communication between miners - Gossip Protocol
-#### - Consensus used in Blockchain - POW + Nakamoto
+#### step 1 - package(data_structure) - Data Structure for Block Data - Merkle Patricia Trie
+#### step 2 - package(block and blockchain) - Defining block and chain mechanism for single system
+#### step 2.5 - package(identity) - Private and Public identity with signature and other utilities
+#### step 3 - package(uri_routing) - router, logger and handlers
+#### step 3.5 - package(gossip_protocol) - Communication between miners - Gossip Protocol
+#### step 3.7 - package(sync_blockchain) - thread safe blockchain
+#### step 4 - package(pow) - Consensus used in Blockchain - POW + Nakamoto
+#### step 5 - package(p5) - mechanism to include tokens, wallet, exchange, book etc (have to refactor this)
 
 
 # Application has following features

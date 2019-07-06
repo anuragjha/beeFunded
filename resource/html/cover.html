@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!--<link rel = "stylesheet" type = "text/css" href = "../stylesheet/cover.css" />
+    <link rel = "stylesheet" type = "text/css" href = "../stylesheet/login.css" />-->
+
+    <style>
+
+        #myVideo {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+
+        /**/
+        .content {
+            position: fixed;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            color: #f1f1f1;
+            width: 100%;
+            padding: 20px;
+        }
+        /* */
+
+        .myBtns {
+            width: 200px;
+            font-size: 18px;
+            padding: 10px;
+            border: none;
+            background: #000;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .myBtns:hover {
+            background: #ddd;
+            color: black;
+        }
+
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /* Set a style for all buttons */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* Extra styles for the cancel button */
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+
+        /* Center the image and position the close button */
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+            position: relative;
+        }
+
+        img.avatar {
+            width: 20%;
+            max-width: 175px;
+            border-radius: 50%;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button (x) */
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 0;
+            color: #000;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            cursor: pointer;
+        }
+
+        /* Add Zoom Animation */
+        .animate {
+            -webkit-animation: animatezoom 0.6s;
+            animation: animatezoom 0.6s
+        }
+
+        @-webkit-keyframes animatezoom {
+            from {-webkit-transform: scale(0)}
+            to {-webkit-transform: scale(1)}
+        }
+
+        @keyframes animatezoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
+        }
+
+
+    </style>
+
+    <title>beeFunded</title>
+</head>
+
+
+<body>
+<div class="container">
+
+    <img src="https://anuragjha.files.wordpress.com/2019/05/blockchain-and-ai.jpeg" id="myVideo" style="z-index: -9">
+    <!-- The video -->
+
+<div class="icon">
+    <a href="cover.html">
+        <img src="https://anuragjha.files.wordpress.com/2019/05/icon.png" alt="Avatar" class="avatar">
+    </a>
+</div>
+
+<div class="content" style="padding: 50px">
+    <h1>Crowdfunding on Blockchain</h1>
+    <p>Share your project with the world to get Funding Or Invest in projects and get returns on your investment</p>
+
+
+   <!-- <button id="myBtn" class="myBtns" onclick="myFunction()">Pause</button> -->
+    <!-- Button to open the modal login form
+    <button onclick="document.getElementById('id01').style.display='block'">Login</button>
+    ///   <iframe src="login.html" class="login">Login</iframe>
+    -->
+    <button onclick="document.getElementById('id01').style.display='block'" class="myBtns" >Login</button>
+    <div id="id01" class="modal" >
+        <form class="modal-content animate" action="/login" method="post">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <img src="https://anuragjha.files.wordpress.com/2019/05/icon.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+                <!--<label for="publicId"><b>PublicId</b></label>
+                <input type="text" placeholder="Enter PublicId" name="publicId" id="publicId" required> -->
+
+                <label for="phrase"><b>Phrase</b></label>
+                <input type="text" placeholder="Enter any random Phrase" name="phrase" id="phrase" required>
+
+                <label for="key"><b>Key</b></label>
+                <input type="password" placeholder="Enter key" name="key" id="key" required>
+
+                <button type="submit">Login</button>
+                <!--<label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label>-->
+            </div>
+
+           <!-- <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div> -->
+        </form>
+    </div>
+
+    <button onclick="document.getElementById('id02').style.display='block'" class="myBtns" >SignUp</button>
+    <div id="id02" class="modal">
+        <form class="modal-content animate" action="/signup" method="post">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <img src="https://anuragjha.files.wordpress.com/2019/05/icon.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+
+                <label for="phrase"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="phrase" id="phrase" required>
+
+                <button type="submit">SignUp</button>
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+</div>
+
+<!-- Optional JavaScript -->
+<script>
+    function myFunction() {
+        var video = document.getElementById("myVideo");
+        var btn = document.getElementById("myBtn");
+        if (video.paused) {
+            video.play();
+            btn.innerHTML = "Pause";
+        } else {
+            video.pause();
+            btn.innerHTML = "Play";
+        }
+    }
+
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        var modal = document.getElementById('id01');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+
+        var modal = document.getElementById('id02');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+
