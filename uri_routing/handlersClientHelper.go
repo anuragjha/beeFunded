@@ -1,7 +1,8 @@
 package uri_routing
 
 import (
-	"../p5"
+	p5 "../client"
+	tkn "../tokens"
 	//s "../p5security"
 	s "../identity"
 	"bytes"
@@ -29,7 +30,8 @@ var BCH p5.BlockChainHolders
 //  it 	has SELF_ADDR   -> from Init func
 // 		has INIT_SERVER -> localhost/6686
 
-var Wallet p5.Wallet
+//var Wallet p5.Wallet
+var Wallet tkn.Wallet
 
 func NewClient(w http.ResponseWriter, r *http.Request) {
 
@@ -130,6 +132,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var respBody []byte
+	var loggedIn = false
 
 	for holderaddr := range BCH.Holders {
 		resp, err := http.Post(holderaddr+"/clientlogin", "application/x-www-form-urlencoded", ioutil.NopCloser(bytes.NewBuffer(reqBody)))
@@ -142,12 +145,40 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				log.Println("Error in reading response, in Login, err - ", err)
 				continue
+			} else {
+				loggedIn = true
 			}
 			break
 		}
 	}
 
+	if loggedIn == true {
+		log.Println("Setting CID from login route")
+		_, _ = http.Post(SELF_ADDR+"/cidset", "application/x-www-form-urlencoded", ioutil.NopCloser(bytes.NewBuffer(reqBody)))
+
+	}
+
 	_, _ = fmt.Fprintf(w, string(respBody))
+}
+
+func CIDSet(w http.ResponseWriter, r *http.Request) {
+
+	err := r.ParseForm()
+	if err != nil {
+		fmt.Println("Error in parsing the login form : err - ", err)
+	}
+
+	cidJson := r.FormValue("key")
+	cid, err := p5.JsonToClientId(cidJson)
+	if err == nil {
+		CID = cid
+	}
+
+	pid := CID.GetMyPublicIdentity()
+	pidJsonString := pid.PublicIdentityToJson()
+	str := "CID :\n" + string(CID.ClientIdToJsonByteArray()) + "\n\nPID :\n" + pidJsonString
+	log.Println("\n\n\n\n", str, "\n\n\n")
+
 }
 
 func TransactionForm(w http.ResponseWriter, r *http.Request) {
@@ -177,19 +208,19 @@ func TransactionForm(w http.ResponseWriter, r *http.Request) {
 		log.Println("Error in Amount conversion : err - ", err)
 	}
 
-	var tx p5.Transaction
+	var tx tkn.Transaction
 
 	log.Println("================================")
 
 	if toVal.Label == "" && toTxId == "" && amountVal >= 0 && feesVal >= 0 {
-		tx = p5.NewTransaction(fromVal, toVal, toTxId, amountVal, feesVal, "req")
+		tx = tkn.NewTransaction(fromVal, toVal, toTxId, amountVal, feesVal, "req")
 		log.Println("================================ Requirement Tx")
 	} else if toTxId != "" && toVal.Label != "" /*&& amountVal >= 0*/ && feesVal >= 0 {
 
-		tx = p5.NewTransaction(fromVal, toVal, toTxId, amountVal, feesVal, "promise")
+		tx = tkn.NewTransaction(fromVal, toVal, toTxId, amountVal, feesVal, "promise")
 		log.Println("================================ Promise Tx")
 	} else if amountVal >= 0 && feesVal >= 0 {
-		tx = p5.NewTransaction(fromVal, toVal, toTxId, amountVal, feesVal, "")
+		tx = tkn.NewTransaction(fromVal, toVal, toTxId, amountVal, feesVal, "")
 		log.Println("================================ Normal Tx")
 	}
 
@@ -198,7 +229,7 @@ func TransactionForm(w http.ResponseWriter, r *http.Request) {
 	log.Println("================================ toTxId : ", tx.TxType)
 	log.Println("================================")
 
-	txBeat := p5.NewTransactionBeat(tx, fromVal, tx.CreateTxSig(CID))
+	txBeat := tkn.NewTransactionBeat(tx, fromVal, tx.CreateTxSig(CID))
 	txBeatJson := txBeat.EncodeToJsonByteArray()
 
 	var resp *http.Response

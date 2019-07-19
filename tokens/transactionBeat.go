@@ -1,10 +1,11 @@
-package p5
+package tokens
 
 import (
 	"encoding/json"
 	"fmt"
 	"log"
 	//s "../p5security"
+	"../client"
 	s "../identity"
 )
 
@@ -24,7 +25,7 @@ func NewTransactionBeat(tx Transaction, fromPid s.PublicIdentity, fromSig []byte
 	}
 }
 
-func PrepareTransactionBeat(tx Transaction, cid ClientId) TransactionBeat {
+func PrepareTransactionBeat(tx Transaction, cid client.ClientId) TransactionBeat {
 
 	pid := cid.GetMyPublicIdentity()
 

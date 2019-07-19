@@ -20,13 +20,14 @@ import (
 	b "../block"
 	//"../p2"
 	//"../p4"
-	"../p5"
+	//p5 "../client"
 	"../pow"
 	//s "../p5security"
 	s "../identity"
 	//"./data"
 	gp "../gossip_protocol"
 	sbc "../sync_blockchain"
+	tkn "../tokens"
 )
 
 //var TA_SERVER = "http://localhost:6688"
@@ -61,7 +62,7 @@ var ID s.Identity
 //var BalanceBook p5.BalanceBook
 //var Wallet p5.Wallet
 
-var TxPool p5.TransactionPool
+var TxPool tkn.TransactionPool
 
 func init() {
 	// This function will be executed before everything else.
@@ -96,7 +97,7 @@ func Start(w http.ResponseWriter, r *http.Request) {
 		SBC = sbc.NewBlockChain() //create new Block chain //apr4
 
 		//currency //p5 //todo p5 todo p5 CURRENCY
-		TxPool = p5.NewTransactionPool()
+		TxPool = tkn.NewTransactionPool()
 		if SELF_ADDR != INIT_SERVER {
 			log.Println("Asking for Transaction Pool !!!")
 			GetTransactionPool() //initialize txPool with existing txs in Pool
@@ -617,13 +618,13 @@ func ShowWallet(w http.ResponseWriter, r *http.Request) {
 
 func ShowBalanceBook(w http.ResponseWriter, r *http.Request) {
 
-	bb := p5.NewBalanceBook()
+	bb := tkn.NewBalanceBook()
 	chain := pow.GetCanonicalChains(&SBC)
 	bb.BuildBalanceBook(chain[0], 2)
 
 	str := "Balance Book :\n"
 	for key, value := range bb.Book.GetAllKeyValuePairs() {
-		str += "\n" + key + "\t\t" + value + " " + p5.TOKENUNIT
+		str += "\n" + key + "\t\t" + value + " " + tkn.TOKENUNIT
 	}
 	str += "\n\n"
 	//

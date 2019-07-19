@@ -140,6 +140,12 @@ var routes = Routes{
 		ClientLogin,
 	},
 	Route{
+		"CIDSet", // used by client to set CID after correct login // NEW !!!!
+		"POST",
+		"/cidset",
+		CIDSet,
+	},
+	Route{
 		"CIDPage", // used by client to set CID //todo - remove - temporary solution
 		"get",
 		"/cidpage",

@@ -1,7 +1,7 @@
 package resource
 
 import (
-	"../p5"
+	tkn "../tokens"
 	"encoding/json"
 	"log"
 	//s "../p5security"
@@ -11,10 +11,10 @@ import (
 type UserLandingPage struct {
 	Pid              s.PublicIdentity
 	FromPid          string
-	BTxs             p5.BorrowingTransactions // key - BorrowingTxId
+	BTxs             tkn.BorrowingTransactions // key - BorrowingTxId
 	PromisedInString string
-	BB               p5.BalanceBook
-	Purse            p5.Wallet
+	BB               tkn.BalanceBook
+	Purse            tkn.Wallet
 }
 
 type LoginPageStruct struct {

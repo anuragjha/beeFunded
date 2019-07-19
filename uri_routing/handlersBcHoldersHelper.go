@@ -1,12 +1,14 @@
 package uri_routing
 
 import (
-	"../p5"
+	p5 "../client"
+	tkn "../tokens"
 	//"../p4"
 	"../pow"
 	//s "../p5security"
 	s "../identity"
 	"../resource"
+	//t "../tokens"
 	"encoding/json"
 	"fmt"
 	"html/template"
@@ -149,12 +151,12 @@ func clientLandingHtml(w http.ResponseWriter, r *http.Request, pid s.PublicIdent
 	obj.Pid = pid                            //cid.GetMyPublicIdentity()
 	obj.FromPid = pid.PublicIdentityToJson() //obj.Pid.PublicIdentityToJson()
 	chains := pow.GetCanonicalChains(&SBC)
-	obj.BTxs = p5.BuildBorrowingTransactions(chains)
-	bb := p5.NewBalanceBook()
+	obj.BTxs = tkn.BuildBorrowingTransactions(chains)
+	bb := tkn.NewBalanceBook()
 	bb.BuildBalanceBook(chains[0], 2)
 	obj.BB = bb
 	obj.PromisedInString = bb.ShowPromised()
-	obj.Purse = p5.NewWallet()
+	obj.Purse = tkn.NewWallet()
 	obj.Purse.Balance = bb.GetBalanceFromPublicKey(pid.PublicKey)
 
 	cwd, _ := os.Getwd()
@@ -177,9 +179,9 @@ func TransactionBeatRecv(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	txBeat := p5.DecodeToTransactionBeat(body)
+	txBeat := tkn.DecodeToTransactionBeat(body)
 
-	if p5.VerifyTxSig(txBeat.Tx.From, txBeat.Tx, txBeat.TxSig) {
+	if tkn.VerifyTxSig(txBeat.Tx.From, txBeat.Tx, txBeat.TxSig) {
 		//check if transaction is valid todo verification in - when getting tx for mpt
 		if txBeat.Tx.Tokens != 0 {
 			//if p5.IsTransactionValid(txBeat.Tx, BalanceBook) { //checks both book and amt promised //todo
@@ -196,7 +198,7 @@ func TransactionBeatRecv(w http.ResponseWriter, r *http.Request) {
 	clientLandingHtml(w, r, pid)
 }
 
-func forwardTxBeat(txBeat p5.TransactionBeat) {
+func forwardTxBeat(txBeat tkn.TransactionBeat) {
 	//forward TransactionBeat
 	log.Println("In fowrardTxBeat =========>")
 	txBeat.Hops--
@@ -227,7 +229,7 @@ func GetTransactionPool() { // called in start func of bcHolder
 		defer resp.Body.Close()
 
 		log.Println("Receved TransactionPoolJson json is --- ", string(respBodyBytes), "!!!")
-		recvTxPool := p5.DecodeJsonToTransactionPoolJson(string(respBodyBytes))
+		recvTxPool := tkn.DecodeJsonToTransactionPoolJson(string(respBodyBytes))
 
 		for _, tx := range recvTxPool.Pool {
 			TxPool.AddToTransactionPool(tx)
@@ -249,7 +251,7 @@ func TransactionPoolRecv(w http.ResponseWriter, r *http.Request) {
 }
 
 func GiveDefaultTokens(cid p5.ClientId) {
-	tx := p5.NewTransaction(ID.GetMyPublicIdentity(), cid.GetMyPublicIdentity(), "", 1000, 0, "default")
+	tx := tkn.NewTransaction(ID.GetMyPublicIdentity(), cid.GetMyPublicIdentity(), "", 1000, 0, "default")
 	TxPool.AddToTransactionPool(tx)
 
 	//txBeat := p5.NewTransactionBeat(tx, ID.GetMyPublicIdentity(), tx.CreateTxSigForMiner(ID))
@@ -258,7 +260,7 @@ func GiveDefaultTokens(cid p5.ClientId) {
 }
 
 func GiveMinerTokens(cid s.Identity) {
-	tx := p5.NewTransaction(ID.GetMyPublicIdentity(), cid.GetMyPublicIdentity(), "", 10000, 0, "start")
+	tx := tkn.NewTransaction(ID.GetMyPublicIdentity(), cid.GetMyPublicIdentity(), "", 10000, 0, "start")
 	TxPool.AddToTransactionPool(tx)
 
 	//txBeat := p5.NewTransactionBeat(tx, ID.GetMyPublicIdentity(), tx.CreateTxSigForMiner(ID))

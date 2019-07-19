@@ -1,4 +1,4 @@
-package p5
+package tokens
 
 import (
 	//"../p1"
@@ -23,7 +23,6 @@ import (
 
 type BalanceBook struct {
 	Book mpt.MerklePatriciaTrie //key - hashOfPubKey and Value - balance
-
 	// key - Requirement transaction id -||- value - BorrowingTransaction
 	Promised map[string]BorrowingTransaction
 	mux      sync.Mutex
@@ -64,9 +63,9 @@ func (bb *BalanceBook) BuildBalanceBook(chain blockchain.Blockchain, fromHeight 
 				//log.Println("\nIn BuildBalanceBook - txJson to be converted to Tx ---> \n", txjson)
 				tx := JsonToTransaction(valueTxJson)
 				log.Println("\nIn BuildBalanceBook - txJson to be converted to Tx ---> keyTxid\n", keyTxid)
-				log.Println("\nIn BuildBalanceBook - txJson to be converted to Tx ---> valueTxJson\n", valueTxJson)
-				log.Println("\nIn BuildBalanceBook - txJson to be converted to Tx ---> tx ID\n", tx.Id)
-				log.Println("\nIn BuildBalanceBook - txJson to be converted to Tx ---> tx Tokens\n", tx.Tokens)
+				//log.Println("\nIn BuildBalanceBook - txJson to be converted to Tx ---> valueTxJson\n", valueTxJson)
+				//log.Println("\nIn BuildBalanceBook - txJson to be converted to Tx ---> tx ID\n", tx.Id)
+				//log.Println("\nIn BuildBalanceBook - txJson to be converted to Tx ---> tx Tokens\n", tx.Tokens)
 
 				bb.UpdateABalanceBookForTx(tx, blk.Header.Miner) // updating BalanceBook for transaction
 

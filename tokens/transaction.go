@@ -1,4 +1,4 @@
-package p5
+package tokens
 
 import (
 	"encoding/hex"
@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 	//s "../p5security"
+	"../client"
 	s "../identity"
 )
 
@@ -62,7 +63,7 @@ func (tx *Transaction) Show() string {
 	return str
 }
 
-func (tx *Transaction) CreateTxSig(fromCid ClientId) []byte {
+func (tx *Transaction) CreateTxSig(fromCid client.ClientId) []byte {
 	return fromCid.GenSignature(tx.TransactionToJsonByteArray())
 }
 
