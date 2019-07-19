@@ -10,7 +10,8 @@ peer-to-peer-funding-on-blockchain
 #### step 3.5 - package(gossip_protocol) - Communication between miners - Gossip Protocol
 #### step 3.7 - package(sync_blockchain) - thread safe blockchain
 #### step 4 - package(pow) - Consensus used in Blockchain - POW + Nakamoto
-#### step 5 - package(p5) - mechanism to include tokens, wallet, exchange, book etc (have to refactor this)
+#### step 5 - package(token) - mechanism to include tokens, wallet, transaction, borrow transaction and tx pool
+#### step 5.5 - package(client) - client and blockchainholders for clients
 
 
 # Application has following features
