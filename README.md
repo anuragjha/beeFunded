@@ -1,5 +1,5 @@
 # beeFunded
-#### Nakamoto Consensus based Blockchain platform running crowd funding application
+#### Nakamoto Consensus based Blockchain platform running a crowd funding application
 
 #### Bockchain Specifications
 Blockchain platform based on Nakamoto Consensus. Used gossip protocol for communication. Merkle patricia trie to store transaction data in block. 
