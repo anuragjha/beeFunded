@@ -1,17 +1,18 @@
 # beeFunded
-peer-to-peer-funding-on-blockchain
-### (usecase - decentralized crowd funding platform)
+#### Nakamoto Consensus based Blockchain platform running crowd funding application
 
-## Bockchain Specifications
-#### step 1 - package(data_structure) - Data Structure for Block Data - Merkle Patricia Trie
-#### step 2 - package(block and blockchain) - Defining block and chain mechanism for single system
-#### step 2.5 - package(identity) - Private and Public identity with signature and other utilities
-#### step 3 - package(uri_routing) - router, logger and handlers
-#### step 3.5 - package(gossip_protocol) - Communication between miners - Gossip Protocol
-#### step 3.7 - package(sync_blockchain) - thread safe blockchain
-#### step 4 - package(pow) - Consensus used in Blockchain - POW + Nakamoto
-#### step 5 - package(token) - includes tokens, wallet, transaction, borrow transaction and tx pool
-#### step 5.5 - package(client) - client and blockchainholders for clients
+#### Bockchain Specifications
+Blockchain platform based on Nakamoto Consensus. Used gossip protocol for communication. Merkle patricia trie to store transaction data in block. 
+###### step 1 - package(data_structure) - Data Structure for Block Data - Merkle Patricia Trie
+By organizing the transaction data in a Merkle Patricia Tree, any block with fraudulent transactions would not match the tree's root hash.
+###### step 2 - package(block and blockchain) - Defining block and chain mechanism for single system
+###### step 2.5 - package(identity) - Private and Public identity with signature and other utilities
+###### step 3 - package(uri_routing) - router, logger and handlers
+###### step 3.5 - package(gossip_protocol) - Communication between miners - Gossip Protocol
+###### step 3.7 - package(sync_blockchain) - thread safe blockchain
+###### step 4 - package(pow) - Consensus used in Blockchain - POW + Nakamoto
+###### step 5 - package(token) - includes tokens, wallet, transaction, borrow transaction and tx pool
+###### step 5.5 - package(client) - client and blockchainholders for clients
 
 
 # Application has following features
@@ -32,8 +33,6 @@ Available balance is used for checking validity of transaction.
 
 #### Todo - 
 - [X] Adding mechanism for fees for block producer
-- [ ] Interest rate and time bound to return Interest
-- [ ] Blacklist Borrower for defaulting
 - [ ] Self Adjusting Difficulty - in progress
 > Algo for now - Receieved a Block for a height h (put logic before checking the difficulty POW)
 
