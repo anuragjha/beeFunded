@@ -21,7 +21,7 @@ By organizing the transaction data in a Merkle Patricia Tree, any block with fra
 
 
 # Application has following features
-#### Every User is both, a Borrower and a Lender.
+#### Every User is a Borrower and a Lender.
 1. Borrower can 'ask' for a sum of tokens. Each 'ask' has
 2. This 'ask' request is share among network users.
 3. Lender can choose a 'ask' request and 'promise' and make a promise for a sum of money.
