@@ -65,4 +65,4 @@
 - Canonical(): This function prints the current canonical chain, and chains of all forks if there are forks. Note that all forks should end at the same height (otherwise there wouldn't be a fork).  
   Example of the output of Canonical() function: You can have a different format, but it should be clean and clear.
 
-WX20190328-104549@2x.png
+![Canonical Chain](canonical_chain.png)
