@@ -2,6 +2,7 @@
 #### Nakamoto Consensus based Blockchain platform running crowd funding application
 
 #### Bockchain Specifications
+Blockchain platform based on Nakamoto Consensus. Used gossip protocol for communication. Merkle patricia trie to store block data. 
 ###### step 1 - package(data_structure) - Data Structure for Block Data - Merkle Patricia Trie
 ###### step 2 - package(block and blockchain) - Defining block and chain mechanism for single system
 ###### step 2.5 - package(identity) - Private and Public identity with signature and other utilities
