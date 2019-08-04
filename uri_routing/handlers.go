@@ -309,7 +309,7 @@ func UploadGenesis(w http.ResponseWriter, r *http.Request) {
 	}
 	_, err = fmt.Fprint(w, blockChainJson)
 	if err != nil {
-		log.Println("in Err of Upload Genesis writing response")
+		log.Println("in Err of Upload Genesis writing response ")
 	}
 }
 
