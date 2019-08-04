@@ -1,5 +1,5 @@
 # beeFunded
-### Nakamoto Consensus based Blockchain platform running crowd funding application
+#### Nakamoto Consensus based Blockchain platform running crowd funding application
 
 #### Bockchain Specifications
 ###### step 1 - package(data_structure) - Data Structure for Block Data - Merkle Patricia Trie
