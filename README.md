@@ -2,15 +2,15 @@
 ### Nakamoto Consensus based Blockchain platform running crowd funding application
 
 #### Bockchain Specifications
-##### step 1 - package(data_structure) - Data Structure for Block Data - Merkle Patricia Trie
-##### step 2 - package(block and blockchain) - Defining block and chain mechanism for single system
-##### step 2.5 - package(identity) - Private and Public identity with signature and other utilities
-##### step 3 - package(uri_routing) - router, logger and handlers
-##### step 3.5 - package(gossip_protocol) - Communication between miners - Gossip Protocol
-##### step 3.7 - package(sync_blockchain) - thread safe blockchain
-##### step 4 - package(pow) - Consensus used in Blockchain - POW + Nakamoto
-##### step 5 - package(token) - includes tokens, wallet, transaction, borrow transaction and tx pool
-##### step 5.5 - package(client) - client and blockchainholders for clients
+###### step 1 - package(data_structure) - Data Structure for Block Data - Merkle Patricia Trie
+###### step 2 - package(block and blockchain) - Defining block and chain mechanism for single system
+###### step 2.5 - package(identity) - Private and Public identity with signature and other utilities
+###### step 3 - package(uri_routing) - router, logger and handlers
+###### step 3.5 - package(gossip_protocol) - Communication between miners - Gossip Protocol
+###### step 3.7 - package(sync_blockchain) - thread safe blockchain
+###### step 4 - package(pow) - Consensus used in Blockchain - POW + Nakamoto
+###### step 5 - package(token) - includes tokens, wallet, transaction, borrow transaction and tx pool
+###### step 5.5 - package(client) - client and blockchainholders for clients
 
 
 # Application has following features
