@@ -7,18 +7,19 @@ import (
 	"../blockchain"
 	//b "../p2/block"
 	b "../block"
-	//"../p4"
-	"../p5"
 	"../pow"
+	//"../p4"
+	//p5 "../tokens"
+	balance "../balance_book"
 	"log"
 	"strconv"
 )
 
-var BalanceBook p5.BalanceBook
+var BalanceBook balance.BalanceBook
 
 func InitBalanceBook() {
 	//currency //p5
-	BalanceBook = p5.NewBalanceBook()
+	BalanceBook = balance.NewBalanceBook()
 }
 
 //func DefaultTokens() {
@@ -49,11 +50,11 @@ func GenerateTransactionsMPT() mptp.MerklePatriciaTrie {
 
 			log.Println("In GenerateTransactionsMPT - tx not in canonical chain - so moving on ... :-)")
 
-			bb := p5.NewBalanceBook()
+			bb := balance.NewBalanceBook()
 			bb.BuildBalanceBook(chains[0], 2)
 
 			// check if available balance is enough //todo check
-			senderKeyForBook := p5.GetKeyForBook(tx.From.PublicKey)
+			senderKeyForBook := balance.GetKeyForBook(tx.From.PublicKey)
 			available, err := bb.Book.Get(senderKeyForBook)
 			if err == nil {
 				availBal, _ := strconv.ParseFloat(available, 64)

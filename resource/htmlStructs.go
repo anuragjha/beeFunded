@@ -1,7 +1,10 @@
 package resource
 
 import (
-	tkn "../tokens"
+	funding "../apps/fundingApp"
+	balance "../balance_book"
+	//tkn "../tokens"
+	"../wallet"
 	"encoding/json"
 	"log"
 	//s "../p5security"
@@ -11,10 +14,10 @@ import (
 type UserLandingPage struct {
 	Pid              s.PublicIdentity
 	FromPid          string
-	BTxs             tkn.BorrowingTransactions // key - BorrowingTxId
+	BTxs             funding.BorrowingTransactions // key - BorrowingTxId
 	PromisedInString string
-	BB               tkn.BalanceBook
-	Purse            tkn.Wallet
+	BB               balance.BalanceBook
+	Purse            wallet.Wallet
 }
 
 type LoginPageStruct struct {

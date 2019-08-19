@@ -1,4 +1,4 @@
-package tokens
+package wallet
 
 import (
 	//"../p1"

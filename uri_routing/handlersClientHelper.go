@@ -5,6 +5,7 @@ import (
 	tkn "../tokens"
 	//s "../p5security"
 	s "../identity"
+	"../wallet"
 	"bytes"
 	"os"
 	"strconv"
@@ -31,7 +32,7 @@ var BCH p5.BlockChainHolders
 // 		has INIT_SERVER -> localhost/6686
 
 //var Wallet p5.Wallet
-var Wallet tkn.Wallet
+var Wallet wallet.Wallet
 
 func NewClient(w http.ResponseWriter, r *http.Request) {
 

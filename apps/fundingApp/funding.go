@@ -1,42 +1,47 @@
-package tokens
+package fundingApp
 
 import (
 	//"../p1"
-	"../data_structure/mpt"
+	"../../data_structure/mpt"
 	//"../p2"
-	"../blockchain"
+	"../../blockchain"
 	//b "../p2/block"
-	b "../block"
+	b "../../block"
+	"../../tokens"
 	"encoding/json"
 	"log"
 )
 
+// funding.go implements the app
+
+// request for fund
+
 type BorrowingTransaction struct {
-	BorrowingTxId string        `json:"borrowingtxid"`
-	BorrowingTx   Transaction   `json:"borrowingtx"`
-	PromisesMade  []Transaction `json:"promisesmade"` // key - transaction id (Lending) // todo todo -- changed from map to array
-	PromisedValue float64       `json:"promisedvalue"`
+	BorrowingTxId string               `json:"borrowingtxid"`
+	BorrowingTx   tokens.Transaction   `json:"borrowingtx"`
+	PromisesMade  []tokens.Transaction `json:"promisesmade"` // key - transaction id (Lending) // todo todo -- changed from map to array
+	PromisedValue float64              `json:"promisedvalue"`
 }
 
-func NewBorrowingTransaction(tx Transaction) BorrowingTransaction {
+func NewBorrowingTransaction(tx tokens.Transaction) BorrowingTransaction {
 	bt := BorrowingTransaction{}
 	bt.BorrowingTxId = tx.Id
 	bt.BorrowingTx = tx
 	bt.PromisedValue = 0.0
-	bt.PromisesMade = make([]Transaction, 0)
+	bt.PromisesMade = make([]tokens.Transaction, 0)
 
 	return bt
 
 }
 
 type BorrowingTransactions struct {
-	BorrowingTxs map[string]Transaction // key - BorrowingTxId value - txJson
-	Borrower     map[string]string      //json of pid of borrower
+	BorrowingTxs map[string]tokens.Transaction // key - BorrowingTxId value - txJson
+	Borrower     map[string]string             //json of pid of borrower
 }
 
 func NewBorrowingTransactions() BorrowingTransactions {
 	btxs := BorrowingTransactions{}
-	btxs.BorrowingTxs = make(map[string]Transaction)
+	btxs.BorrowingTxs = make(map[string]tokens.Transaction)
 	btxs.Borrower = make(map[string]string)
 	return btxs
 }
@@ -55,7 +60,7 @@ func BuildBorrowingTransactions(chains []blockchain.Blockchain) BorrowingTransac
 				keyValuePairs := mpt.GetAllKeyValuePairs() //key - txid value - txJson
 				//loop over all key valye pairs and collect borrowing txs
 				for _, txjson := range keyValuePairs {
-					tx := JsonToTransaction(txjson)
+					tx := tokens.JsonToTransaction(txjson)
 					if tx.TxType == "req" /*tx.To.Label == "" && tx.ToTxId == "" && tx.Tokens > 0 && tx.TxType != "start" && tx.TxType != "default" && tx.From.Label != ""*/ {
 						btx.BorrowingTxs[tx.Id] = tx
 						btx.Borrower[tx.Id] = tx.From.PublicIdentityToJson()
@@ -77,3 +82,5 @@ func (btx *BorrowingTransaction) EncodeTojsonString() string {
 	}
 	return string(jsonBytes)
 }
+
+// promise to fund

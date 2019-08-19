@@ -14,6 +14,7 @@ import (
 	"strings"
 	"time"
 
+	balance "../balance_book"
 	//"../p1"
 	mptp "../data_structure/mpt"
 	//b "../p2/block"
@@ -28,6 +29,7 @@ import (
 	gp "../gossip_protocol"
 	sbc "../sync_blockchain"
 	tkn "../tokens"
+	"../wallet"
 )
 
 //var TA_SERVER = "http://localhost:6688"
@@ -618,13 +620,13 @@ func ShowWallet(w http.ResponseWriter, r *http.Request) {
 
 func ShowBalanceBook(w http.ResponseWriter, r *http.Request) {
 
-	bb := tkn.NewBalanceBook()
+	bb := balance.NewBalanceBook()
 	chain := pow.GetCanonicalChains(&SBC)
 	bb.BuildBalanceBook(chain[0], 2)
 
 	str := "Balance Book :\n"
 	for key, value := range bb.Book.GetAllKeyValuePairs() {
-		str += "\n" + key + "\t\t" + value + " " + tkn.TOKENUNIT
+		str += "\n" + key + "\t\t" + value + " " + wallet.TOKENUNIT
 	}
 	str += "\n\n"
 	//

@@ -1,6 +1,7 @@
-package tokens
+package balance_book
 
 import (
+	funding "../apps/fundingApp"
 	//"../p1"
 	"../data_structure/mpt"
 	//"../p2"
@@ -9,11 +10,12 @@ import (
 	b "../block"
 	//s "../p5security"
 	s "../identity"
+	"../tokens"
+	"../wallet"
 	"crypto/rsa"
 	"encoding/hex"
 	"fmt"
 	"golang.org/x/crypto/sha3"
-
 	//"go/types"
 	"log"
 	"strconv"
@@ -21,10 +23,12 @@ import (
 	//"sync"
 )
 
+// balance book maintains simple transaction and funding application transaaction
+
 type BalanceBook struct {
 	Book mpt.MerklePatriciaTrie //key - hashOfPubKey and Value - balance
 	// key - Requirement transaction id -||- value - BorrowingTransaction
-	Promised map[string]BorrowingTransaction
+	Promised map[string]funding.BorrowingTransaction
 	mux      sync.Mutex
 }
 
@@ -34,7 +38,7 @@ func NewBalanceBook() BalanceBook {
 	//promised := mpt.MerklePatriciaTrie{}
 	//promised.Initial()
 
-	promised := make(map[string]BorrowingTransaction)
+	promised := make(map[string]funding.BorrowingTransaction)
 
 	return BalanceBook{
 		Book:     book,
@@ -61,7 +65,7 @@ func (bb *BalanceBook) BuildBalanceBook(chain blockchain.Blockchain, fromHeight 
 			for keyTxid, valueTxJson := range keyValuePairs {
 
 				//log.Println("\nIn BuildBalanceBook - txJson to be converted to Tx ---> \n", txjson)
-				tx := JsonToTransaction(valueTxJson)
+				tx := tokens.JsonToTransaction(valueTxJson)
 				log.Println("\nIn BuildBalanceBook - txJson to be converted to Tx ---> keyTxid\n", keyTxid)
 				//log.Println("\nIn BuildBalanceBook - txJson to be converted to Tx ---> valueTxJson\n", valueTxJson)
 				//log.Println("\nIn BuildBalanceBook - txJson to be converted to Tx ---> tx ID\n", tx.Id)
@@ -86,7 +90,7 @@ func (bb *BalanceBook) BuildBalanceBook(chain blockchain.Blockchain, fromHeight 
 //	bb.UpdateABalanceInBook(fromKey, tx.Tokens)
 //}
 
-func (bb *BalanceBook) UpdateABalanceBookForTx(tx Transaction, miner s.PublicIdentity) { // update bb based on transaction here
+func (bb *BalanceBook) UpdateABalanceBookForTx(tx tokens.Transaction, miner s.PublicIdentity) { // update bb based on transaction here
 
 	log.Println(">>>>>>>>>>>>>>> In UpdateABalanceBookForTx  Overall start <<<<<<<<<<<<<<<<")
 	minerKey := bb.GetKey(miner.PublicKey)
@@ -176,7 +180,7 @@ func (bb *BalanceBook) UpdateABalanceInBook(PublicKeyHashStr string, updateBalan
 	bb.Book.Insert(PublicKeyHashStr, fmt.Sprintf("%f", newBalance))
 }
 
-func (bb *BalanceBook) UpdateABalanceInPromised(tx Transaction, btx BorrowingTransaction) { //todo check coz changed to array - var PromisesMade
+func (bb *BalanceBook) UpdateABalanceInPromised(tx tokens.Transaction, btx funding.BorrowingTransaction) { //todo check coz changed to array - var PromisesMade
 
 	log.Println(">>>>>>>>>>>>>>>  In UpdateABalanceInPromised  <<<<<<<<<<<<<<<<") // todo todo ::: getting correct tx but not able to put it on the map
 	log.Println("\nTransaction being processed : \n", tx.TransactionToJson())     // todo todo --- start with testing - to test the changes made
@@ -236,7 +240,7 @@ func (bb *BalanceBook) UpdateABalanceInPromised(tx Transaction, btx BorrowingTra
 	////}
 }
 
-func (bb *BalanceBook) TransferPromisesMade(btx BorrowingTransaction) { //todo check coz changed to array - var PromisesMade
+func (bb *BalanceBook) TransferPromisesMade(btx funding.BorrowingTransaction) { //todo check coz changed to array - var PromisesMade
 
 	log.Println(">>>>>>>>>>>>>>> In TransferPromisesMade  <<<<<<<<<<<<<<<<")
 	for _, ptx := range btx.PromisesMade {
@@ -253,7 +257,7 @@ func (bb *BalanceBook) TransferPromisesMade(btx BorrowingTransaction) { //todo c
 
 }
 
-func (btx *BorrowingTransaction) CheckForEnoughPromises() bool {
+func CheckForEnoughPromises(btx *funding.BorrowingTransaction) bool {
 
 	log.Println(">>>>>>>>>>>>>>> In CheckForEnoughPromises  <<<<<<<<<<<<<<<<")
 
@@ -274,7 +278,7 @@ func (btx *BorrowingTransaction) CheckForEnoughPromises() bool {
 	return false
 }
 
-func (bb *BalanceBook) PutTxInPromised(tx Transaction) {
+func (bb *BalanceBook) PutTxInPromised(tx tokens.Transaction) {
 	bb.mux.Lock()
 	defer bb.mux.Unlock()
 
@@ -284,7 +288,7 @@ func (bb *BalanceBook) PutTxInPromised(tx Transaction) {
 	// key - Requirement transaction in json -||- value - MPT of <To Txs in json, value>
 	if _, ok := bb.Promised[tx.Id]; !ok {
 
-		btx := NewBorrowingTransaction(tx)
+		btx := funding.NewBorrowingTransaction(tx)
 
 		log.Println("\nCheck Start !!! Check Start !!! Check Start !!!\n\n")
 
@@ -369,9 +373,9 @@ func (bb *BalanceBook) Show() string {
 func (bb *BalanceBook) ShowPromised() string {
 	str := ""
 	for _, btx := range bb.Promised {
-		str += "#  Asked sum : >>---> " + btx.BorrowingTxId + " of amt : " + fmt.Sprintf("%f", btx.BorrowingTx.Tokens) + " " + TOKENUNIT + "\n"
+		str += "#  Asked sum : >>---> " + btx.BorrowingTxId + " of amt : " + fmt.Sprintf("%f", btx.BorrowingTx.Tokens) + " " + wallet.TOKENUNIT + "\n"
 		for _, promise := range btx.PromisesMade {
-			str += "\n-->   Promised sum -> " + promise.From.Label + " has promised : " + fmt.Sprintf("%f", promise.Tokens) + " " + TOKENUNIT + " #  \n"
+			str += "\n-->   Promised sum -> " + promise.From.Label + " has promised : " + fmt.Sprintf("%f", promise.Tokens) + " " + wallet.TOKENUNIT + " #  \n"
 		}
 	}
 	return str

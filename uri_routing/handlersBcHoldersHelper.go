@@ -4,10 +4,13 @@ import (
 	p5 "../client"
 	tkn "../tokens"
 	//"../p4"
+	funding "../apps/fundingApp"
+	balance "../balance_book"
 	"../pow"
 	//s "../p5security"
 	s "../identity"
 	"../resource"
+	"../wallet"
 	//t "../tokens"
 	"encoding/json"
 	"fmt"
@@ -151,12 +154,12 @@ func clientLandingHtml(w http.ResponseWriter, r *http.Request, pid s.PublicIdent
 	obj.Pid = pid                            //cid.GetMyPublicIdentity()
 	obj.FromPid = pid.PublicIdentityToJson() //obj.Pid.PublicIdentityToJson()
 	chains := pow.GetCanonicalChains(&SBC)
-	obj.BTxs = tkn.BuildBorrowingTransactions(chains)
-	bb := tkn.NewBalanceBook()
+	obj.BTxs = funding.BuildBorrowingTransactions(chains)
+	bb := balance.NewBalanceBook()
 	bb.BuildBalanceBook(chains[0], 2)
 	obj.BB = bb
 	obj.PromisedInString = bb.ShowPromised()
-	obj.Purse = tkn.NewWallet()
+	obj.Purse = wallet.NewWallet()
 	obj.Purse.Balance = bb.GetBalanceFromPublicKey(pid.PublicKey)
 
 	cwd, _ := os.Getwd()
