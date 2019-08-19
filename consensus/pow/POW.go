@@ -8,13 +8,13 @@ import (
 	"time"
 
 	//"../p1"
-	"../data_structure/mpt"
+	"../../data_structure/mpt"
 	//"../p2"
-	"../blockchain"
+	"../../blockchain"
 	//"../p2/block"
-	"../block"
+	"../../block"
 	//"../p3/data"
-	"../sync_blockchain"
+	"../../sync_blockchain"
 )
 
 // func to InitializeNonce
@@ -66,7 +66,7 @@ func FindNonce(parentHash string, mpt *mpt.MerklePatriciaTrie, difficulty int) s
 
 // GetCanonicalChains func returns slice of canonical blockchains
 func GetCanonicalChains(SBC *sync_blockchain.SyncBlockChain) []blockchain.Blockchain {
-	maxHeight := SBC.GetLength() // - 6 //
+	maxHeight := SBC.GetLength() // - 6 // Todo: remove comment o -6 for production
 	blocksAtMaxHeight, _ := SBC.Get(maxHeight)
 
 	canonicalChains := make([]blockchain.Blockchain, len(blocksAtMaxHeight))

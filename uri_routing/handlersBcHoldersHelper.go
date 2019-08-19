@@ -6,7 +6,7 @@ import (
 	//"../p4"
 	funding "../apps/fundingApp"
 	balance "../balance_book"
-	"../pow"
+	"../consensus/pow"
 	//s "../p5security"
 	s "../identity"
 	"../resource"

@@ -22,7 +22,7 @@ import (
 	//"../p2"
 	//"../p4"
 	//p5 "../client"
-	"../pow"
+	"../consensus/pow"
 	//s "../p5security"
 	s "../identity"
 	//"./data"

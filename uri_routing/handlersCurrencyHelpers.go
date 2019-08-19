@@ -7,7 +7,7 @@ import (
 	"../blockchain"
 	//b "../p2/block"
 	b "../block"
-	"../pow"
+	"../consensus/pow"
 	//"../p4"
 	//p5 "../tokens"
 	balance "../balance_book"
