@@ -16,8 +16,11 @@ By organizing the transaction data in a Merkle Patricia Tree, any block with fra
 ##### step 4 
 - package(pow) - Consensus used in Blockchain - POW + Nakamoto
 ##### step 5 
-- package(token) - includes tokens, wallet, transaction, borrow transaction and tx pool
+- package(fundingApp) - include borrowing transaction and related behaviour
 - package(client) - client and blockchainholders for clients
+- package(token) - includes tokens, transaction, transaction beat and tx pool
+- package(balance_book) - holds balance book data stu and behaviour for updating book
+- package(wallet) - holds wallet data stu
 
 
 # Application has following features
