@@ -41,7 +41,7 @@ func (sbc *SyncBlockChain) GetBlock(height int32, hash string) (block.Block, boo
 	defer sbc.mux.Unlock()
 
 	//blks, found := sbc.Get(height)
-	blocks, found := sbc.bc.Get(height)
+	blks, found := sbc.bc.Get(height)
 	if found == true {
 		for _, b := range blks {
 			if b.Header.Hash == hash {
